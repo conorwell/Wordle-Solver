@@ -8,20 +8,38 @@ public class LinkedListSolve extends Wordle{
     Wordle wordle;
     LinkedList<String> possibleWords;
     int guesses;
-    int total;
-
+    static double total;
+    static double average;
+    static int solved;
 
     public static void main(String[] args) {
-        System.out.println("How long should the wordle be?");
-        int lengthInput = Wordle.getIntInput(1, 10);
+        //System.out.println("How long should the wordle be?");
+        //int lengthInput = Wordle.getIntInput(1, 10);
+        int lengthInput = 10;
+        double wordCount = 4298;
+        total = 0;
+        solved = 0;
+        double startTime = System.currentTimeMillis();
+        for(int i = 0 ; i < wordCount; i++){
+        LinkedListSolve r = new LinkedListSolve(lengthInput, i);}
+        double endTime = System.currentTimeMillis();
+        average = total/wordCount;
+        double time = (long) (endTime - startTime);
+        double avgTime = (long) (time/wordCount);
+        System.out.println("Average Guesses: " + average);
+        System.out.println("Solved: "+ solved);
+        System.out.println("Time: " + time + " Milliseconds");
+        System.out.println("Average solve time: " + avgTime);
 
-        LinkedListSolve r = new LinkedListSolve(lengthInput);
     }
-    public LinkedListSolve(int wordleLength) {
-        super(wordleLength);
+
+
+    public LinkedListSolve(int wordleLength, int wordNumber) {
+        super(wordleLength, wordNumber);
         char [] newGuess;
-       newGuess = getInput(wordleLength);
+       //newGuess = getInput(wordleLength);
         possibleWords = getAllWords(super.nLetterWordHashMap);
+        newGuess = possibleWords.get(0).toCharArray();
         int[] score = {0};
         char[] guessToArray;
         guessToArray = newGuess;
@@ -51,6 +69,8 @@ public class LinkedListSolve extends Wordle{
             System.out.println();
         }
         System.out.println("You win!! The word was " + String.valueOf(super.correctWord) + " Guesses: " + guesses);
+        total = total + guesses;
+        if(guesses<7){solved++;}
     }
 
 
