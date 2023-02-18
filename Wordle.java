@@ -42,7 +42,6 @@ public class Wordle {
             updatePossibleWords(score, wordInput);
             guesses++;
 
-
             printResult(wordInput, score);
         }
         System.out.println("You win!! You got " + String.valueOf(correctWord) + " in " + guesses + " guesses!");
@@ -100,6 +99,7 @@ public class Wordle {
     public void updatePossibleWords(int[] score, char[] inputtedWord){
         HashMap<String,Long> newCurrentPossibleWords = (HashMap<String,Long>) currentPossibleWords.clone();
         for(HashMap.Entry<String,Long> wordEntry :currentPossibleWords.entrySet()){
+
             if (!doesWordFitScore(wordEntry.getKey().toCharArray(), score, inputtedWord)){
                 newCurrentPossibleWords.remove(wordEntry.getKey());
             }
@@ -108,7 +108,16 @@ public class Wordle {
     }
 
     public boolean doesWordFitScore(char[] testWord, int[] score, char[] scoredWord){
-        return Arrays.equals(score, scoreWord(scoredWord, testWord));
+        int[] testScore = scoreWord(scoredWord, testWord);
+        if (Arrays.equals(score, testScore)){
+            for(int i = 0; i < scoredWord.length; i++){
+                if (scoredWord[i] == 1 && testWord[i] == scoredWord[i]){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
     public int[] scoreWord(char[] inputWord, char[] correctWord){
