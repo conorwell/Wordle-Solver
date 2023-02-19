@@ -6,8 +6,8 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 public class RandomSolve {
+    int guessCounter;
 
-    int wordleLength;
 
     public static void main(String[] args) {
         System.out.println("How long should the wordle be?");
@@ -16,14 +16,17 @@ public class RandomSolve {
         RandomSolve r = new RandomSolve(w);
     }
 
-    public RandomSolve(Wordle wordle){
+    private RandomSolve(Wordle wordle){
+        guessCounter = 0;
         String randomGuess;
         int[] score = {0};
         char[] randomGuessToArray;
+        List<String> keysAsList = new ArrayList<String>(wordle.nLetterWordHashMap.keySet());
         while(IntStream.of(score).anyMatch(x -> x == 0) || IntStream.of(score).anyMatch(x -> x == 1)) {
-            randomGuess = getRandWord(wordle.nLetterWordHashMap);
+            randomGuess = getRandWord(keysAsList, wordle.nLetterWordHashMap);
             randomGuessToArray = wordToScore(randomGuess);
             score = wordle.scoreWord(randomGuessToArray, wordle.correctWord);
+            guessCounter++;
             for (char i: randomGuessToArray){
                 System.out.print(i + ", ");
             }
@@ -34,18 +37,18 @@ public class RandomSolve {
             System.out.println();
         }
         System.out.println("You win!! The word was " + String.valueOf(wordle.correctWord));
+        System.out.println("it took the random solver " + guessCounter + " tries!");
         }
 
-
-    public String getRandWord(HashMap<String, Long> nLetterWordHashMap){
-        List<String> keysAsList = new ArrayList<String>(nLetterWordHashMap.keySet());
+    private String getRandWord(List<String> keysAsList, HashMap<String, Long> nLetterWordHashMap){
         Random rand = new Random();
         int randNum = rand.nextInt(keysAsList.size()-1) + 1;
         String randWord = keysAsList.get(randNum);
+        keysAsList.remove(randNum);
         return randWord;
     }
 
-    public char[] wordToScore(String word){
+    private char[] wordToScore(String word){
         char[] wordArray = word.toCharArray();
         return wordArray;
     }
