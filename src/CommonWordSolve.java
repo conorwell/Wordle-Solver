@@ -35,7 +35,7 @@ public class CommonWordSolve extends Wordle{
         System.out.println();
         while(IntStream.of(score).anyMatch(x -> x == 0) || IntStream.of(score).anyMatch(x -> x == 1)) {
             super.updatePossibleWords(score, guessToArray);
-            currentPossibleWords = super.currentPossibleWords;
+            possibleWords = getAllWords(super.currentPossibleWords);
             guesses = guesses + 1;
             newGuess = findWord(possibleWords).toCharArray();
             guessToArray = newGuess;
