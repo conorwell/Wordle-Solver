@@ -1,12 +1,15 @@
 public class Main {
     public static void main(String[] args) {
-      
+      testCommonWordSolver();
+        testRandomSolve();
+        testScoreSolve();
+        testEntropyMaximizer();
     }
 
     public static void testCommonWordSolver() {
         double average = 0;
-        int lengthInput = 3;
-        double wordCount = 882;
+        int lengthInput = 5;
+        double wordCount = 20;
         CommonWordSolve.solvedIn = new int[20];
         double startTime = System.currentTimeMillis();
         for (int i = 0; i < wordCount; i++) {
@@ -28,7 +31,7 @@ public class Main {
     public static void testRandomSolve() {
         double average = 0;
         int lengthInput = 5;
-        double wordCount = 4358;
+        double wordCount = 20;
         double startTime = System.currentTimeMillis();
         for (int i = 1; i < wordCount; i++) {
             Wordle w = new Wordle(lengthInput, i);
@@ -47,7 +50,7 @@ public class Main {
     public static void testScoreSolve() {
         double average = 0;
         int lengthInput = 5;
-        double wordCount = 4358;
+        double wordCount = 20;
         ScoreSolve.solvedIn = new int[15];
         double startTime = System.currentTimeMillis();
         for (int i = 0; i < wordCount; i++) {
@@ -68,8 +71,8 @@ public class Main {
 
     public static void testEntropyMaximizer() {
         double average = 0;
-        int lengthInput = 10;
-        double wordCount = 4298;
+        int lengthInput = 5;
+        double wordCount = 20;
         int [] solvedIn = new int[20];
         int guesses =0;
         int total =0;
